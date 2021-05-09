@@ -1,52 +1,20 @@
-# Project Title
+# Learn Microservices with Spring Boot Labs
 
-## Table of Contents
+Monolith-first to microservices with Spring Boot, test-driven development, event-driven systems, common architecture patterns, nonfunctional requirements, and end-to-end testing with Cucumber.
 
-- [About](#about)
-- [Getting Started](#getting_started)
-- [Usage](#usage)
-- [Contributing](CONTRIBUTING.md)
+## A Basic Spring Boot Application
 
-## About <a name = "about"></a>
+User Story 1
 
-Write about 1-2 paragraphs describing the purpose of your project.
+As a user of the application,
+I want to solve a random multiplication problem using mental calculation
+so I exercise my brain.
 
-## Getting Started <a name = "getting_started"></a>
+Tasks
 
-You can [create](https://cli.github.com/manual/gh_repo_create) a new repo using this template via the `gh` cli:
+1. Create a basic service with business logic.
+2. Create a basic API to access this service (REST API).
+3. Create a basic web page to ask the users to solve that calculation.
 
-``` bash
-# gh repo create [<name>] [flags]
-gh repo create gitops-labs/my-repo \
-    --template gitops-labs/template
-```
-
-### Prerequisites
-
-What things you need to install the software and how to install them.
-
-``` bash
-brew install gh
-```
-
-### Installing
-
-A step by step series of examples that tell you how to get a development env running.
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo.
-
-## Usage <a name = "usage"></a>
-
-Add notes about how to use the system.
+Generate the project skeleton with Lombok, Spring Web, and Validation:
+[Spring Initializr with Java 8, Gradle, Spring Boot 2.4.5](https://start.spring.io/#!type=gradle-project&language=java&platformVersion=2.4.5.RELEASE&packaging=jar&jvmVersion=1.8&groupId=microservices.book&artifactId=multiplication&name=multiplication&description=Multiplication%20Application&packageName=microservices.book.multiplication&dependencies=lombok,web,validation)
