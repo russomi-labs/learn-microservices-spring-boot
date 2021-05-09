@@ -10,4 +10,10 @@ public class MultiplicationApplication {
 		SpringApplication.run(MultiplicationApplication.class, args);
 	}
 
+	// @Bean
+	// public ObjectMapper objectMapper() {
+	// 	ObjectMapper om = new ObjectMapper();
+	// 	om.setPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CAMEL_CASE);
+	// 	return om;
+	// }
 }
