@@ -2,7 +2,7 @@
 
 Monolith-first to microservices with Spring Boot, test-driven development, event-driven systems, common architecture patterns, nonfunctional requirements, and end-to-end testing with Cucumber.
 
-## 01 - A Basic Spring Boot Application
+## A Basic Spring Boot Application
 
 ### User Story 1
 
@@ -16,8 +16,7 @@ so I exercise my brain.
 2. Create a basic API to access this service (REST API).
 3. Create a basic web page to ask the users to solve that calculation.
 
-Generate the project skeleton with Lombok, Spring Web, and Validation:
-[Spring Initializr with Java 8, Gradle, Spring Boot 2.4.5](https://start.spring.io/#!type=gradle-project&language=java&platformVersion=2.4.5.RELEASE&packaging=jar&jvmVersion=1.8&groupId=microservices.book&artifactId=multiplication&name=multiplication&description=Multiplication%20Application&packageName=microservices.book.multiplication&dependencies=lombok, web, validation)
+Generate the project skeleton with Lombok, Spring Web, and Validation: [Spring Initializr with Java 8, Gradle, Spring Boot 2.4.5](https://start.spring.io/#!type=gradle-project&language=java&platformVersion=2.4.5.RELEASE&packaging=jar&jvmVersion=1.8&groupId=microservices.book&artifactId=multiplication&name=multiplication&description=Multiplication%20Application&packageName=microservices.book.multiplication&dependencies=lombok,web,validation)
 
 ### Three-Tier Three-Layer Architecture
 
@@ -25,7 +24,7 @@ Generate the project skeleton with Lombok, Spring Web, and Validation:
 - Application tier: business logic, interfaces, and the data interfaces for persistence.
 - Data store tier: persists the application's data (e.g. Database, file system, etc.)
 
-### Application Tier
+### Application Tier Layers
 
 The application tier is made up of the following layers:
 
@@ -34,7 +33,7 @@ The application tier is made up of the following layers:
 - Data Layer - Persists entities with Data Access Objects (DAO) or Repoistories (Domain)
 - Domain Layer - Domain is isolated and independent of everything else
 
-### Spring Annotations
+#### Spring Annotations
 
 Three stereotype annotations that map to each of layers:
 
@@ -55,21 +54,21 @@ Start by modeling the business domain to structure the project:
 - User - The user
 - Challenge Attempt - The attempt by the user to solve the math problem
 
-### Relationships
+#### Relationships
 
 - Challenge and User are independent
 - Challenge Attempts reference a User and a Challenge
 
-### Bounded Contexts
+#### Bounded Contexts
 
 - User
 - Challenge
 
-### Domain Layer
+#### Domain Layer
 
-- microservices.book.multiplication.user.User
-- microservices.book.multiplication.Challenge
-- microservices.book.multiplication.challenge.ChallengeAttempt
+- `microservices.book.multiplication.user.User`
+- `microservices.book.multiplication.Challenge`
+- `microservices.book.multiplication.challenge.ChallengeAttempt`
 
 ### Business Layer
 
@@ -77,3 +76,30 @@ Start by modeling the business domain to structure the project:
 - Functionality to check whether an attempt is correct
 
 ### Presentation Layer
+
+REpresentational State Transfer (REST) - Uses HTTP verbs to perform API operations:
+
+| HTTP Verb | Operation on Collection     | Operation on Item |
+| --------- | --------------------------- | ----------------- |
+| GET       | Gets full list of items     | Get the item      |
+| POST      | Creates a new item          | Not Applicable    |
+| PUT       | Not Applicable              | Updates the item  |
+| DELETE    | Deletes the full collection | Deletes the item  |
+
+REST APIs with Spring Boot use the following annotations:
+
+- `@RestController` - specialization of @Controller
+- `@RequestBody` - Used to pass body of request to method and Spring will deserialize custom class to JSON
+- `@RequestMapping` - Model resources and verbs at class and method level and spring provides variants
+  - `@GetMapping` - Get
+  - `@PostMapping` - Create
+  - `@PutMapping` - Update
+  - `@DeleteMapping` - Delete
+
+#### API Design
+
+- An interface to get a random multiplication problem
+  - GET `/challenges/random`
+- An endpoint to send a guess for a given multiplication problem from a user alias
+  - POST `/attempts`
+- Both resources belong to the challenges domain
