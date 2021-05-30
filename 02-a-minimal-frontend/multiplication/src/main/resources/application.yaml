@@ -1,0 +1,4 @@
+server:
+  error:
+    includeMessage: always
+    includeBindingErrors: always
