@@ -1,5 +1,6 @@
 package microservices.book.multiplication.challenge;
 
+import microservices.book.multiplication.serviceclients.GamificationServiceClient;
 import microservices.book.multiplication.user.User;
 import microservices.book.multiplication.user.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,10 +29,13 @@ class ChallengeServiceTest {
 	private UserRepository userRepository;
 	@Mock
 	private ChallengeAttemptRepository attemptRepository;
+	@Mock
+	private GamificationServiceClient gamificationServiceClient;
 
 	@BeforeEach
 	public void setUp() {
-		challengeService = new ChallengeServiceImpl(userRepository, attemptRepository);
+		challengeService = new ChallengeServiceImpl(userRepository, attemptRepository,
+				gamificationServiceClient);
 		// Keep in mind that we needed to move the
 		// given(attemptRepository)... to the test cases
 		// that use it to prevent the unused stubs errors.
@@ -50,6 +54,7 @@ class ChallengeServiceTest {
 		then(resultAttempt.isCorrect()).isTrue();
 		verify(userRepository).save(new User("john_doe"));
 		verify(attemptRepository).save(resultAttempt);
+		verify(gamificationServiceClient).sendAttempt(resultAttempt);
 	}
 
 	@Test
@@ -65,6 +70,7 @@ class ChallengeServiceTest {
 		then(resultAttempt.isCorrect()).isFalse();
 		verify(userRepository).save(new User("john_doe"));
 		verify(attemptRepository).save(resultAttempt);
+		verify(gamificationServiceClient).sendAttempt(resultAttempt);
 	}
 
 	@Test
@@ -83,6 +89,7 @@ class ChallengeServiceTest {
 		then(resultAttempt.getUser()).isEqualTo(existingUser);
 		verify(userRepository, never()).save(any());
 		verify(attemptRepository).save(resultAttempt);
+		verify(gamificationServiceClient).sendAttempt(resultAttempt);
 	}
 
 	@Test
