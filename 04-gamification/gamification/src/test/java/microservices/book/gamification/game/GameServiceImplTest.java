@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import lombok.var;
 import microservices.book.gamification.challenge.ChallengeSolvedDTO;
 import microservices.book.gamification.game.GameService.GameResult;
 import microservices.book.gamification.game.badgeprocessors.BadgeProcessor;
@@ -43,7 +42,7 @@ class GameServiceImplTest {
 	void processCorrectAttemptTest() {
 		// given
 		long userId = 1L, attemptId = 10L;
-		var attempt = new ChallengeSolvedDTO(attemptId, true, 20, 70, userId, "john");
+		ChallengeSolvedDTO attempt = new ChallengeSolvedDTO(attemptId, true, 20, 70, userId, "john");
 		ScoreCard scoreCard = new ScoreCard(userId, attemptId);
 		given(scoreRepository.getTotalScoreForUser(userId)).willReturn(Optional.of(10));
 		given(scoreRepository.findByUserIdOrderByScoreTimestampDesc(userId))
