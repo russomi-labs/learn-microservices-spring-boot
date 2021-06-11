@@ -19,19 +19,18 @@ repositories {
 }
 
 dependencies {
-  implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-  implementation 'org.springframework.boot:spring-boot-starter-validation'
-  implementation 'org.springframework.boot:spring-boot-starter-web'
-  implementation 'org.springframework.boot:spring-boot-starter-amqp'
-
-  // Required to handle lazy fetching with JSON serialization.
-  implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
-  compileOnly 'org.projectlombok:lombok'
-  runtimeOnly 'com.h2database:h2'
-  implementation 'io.springfox:springfox-boot-starter:3.0.0'
-  compileOnly 'io.springfox:springfox-swagger-ui:3.0.0'
-  annotationProcessor 'org.projectlombok:lombok'
-  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    // Required to handle lazy fetching with JSON serialization.
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
+    runtimeOnly 'com.h2database:h2'
+    compileOnly 'org.projectlombok:lombok'
+    compileOnly 'io.springfox:springfox-swagger-ui:3.0.0'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 test {
