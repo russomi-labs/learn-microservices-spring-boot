@@ -16,6 +16,11 @@
 # For educational purposes we will show the SQL in console
 # spring.jpa.show-sql=true
 
+# amqp.exchange.attempts=attempts.topic
+# amqp.queue.gamification=gamification.queue
+# Shows declaration of exchanges, queues, bindings, etc.
+# logging.level.org.springframework.amqp.rabbit.core.RabbitAdmin = DEBUG
+
 ---
 # server section
 server:
@@ -37,3 +42,15 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+# Name of the exchange
+amqp:
+  exchange:
+    attempts: attempts.topic
+  queue:
+    gamification: gamification.queue
+
+# logging
+logging:
+  level:
+    org.springframework.amqp.rabbit.core.RabbitAdmin: DEBUG
