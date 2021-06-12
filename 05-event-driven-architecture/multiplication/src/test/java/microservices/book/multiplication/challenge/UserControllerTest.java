@@ -45,12 +45,11 @@ class UserControllerTest {
 				.willReturn(Arrays.asList(user1, user2));
 
 		// when
-		MockHttpServletResponse response =
-				mvc.perform(get("/users/1,2")).andReturn().getResponse();
+		MockHttpServletResponse response = mvc.perform(get("/users/1,2")).andReturn().getResponse();
 
 		// then
 		then(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-		then(response.getContentAsString()).isEqualTo(
-				jsonRequestUser.write(Arrays.asList(user1, user2)).getJson());
+		then(response.getContentAsString())
+				.isEqualTo(jsonRequestUser.write(Arrays.asList(user1, user2)).getJson());
 	}
 }

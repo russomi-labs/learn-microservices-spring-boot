@@ -14,26 +14,26 @@ import static org.mockito.BDDMockito.given;
 @ExtendWith(MockitoExtension.class)
 class ChallengeGeneratorServiceTest {
 
-    private ChallengeGeneratorService challengeGeneratorService;
+	private ChallengeGeneratorService challengeGeneratorService;
 
-    @Spy
-    private Random random;
+	@Spy
+	private Random random;
 
-    @BeforeEach
-    public void setUp() {
-        challengeGeneratorService = new ChallengeGeneratorServiceImpl(random);
-    }
+	@BeforeEach
+	public void setUp() {
+		challengeGeneratorService = new ChallengeGeneratorServiceImpl(random);
+	}
 
-    @Test
-    void generateRandomFactorIsBetweenExpectedLimits() {
-        // 89 is max - min range
-        given(random.nextInt(89)).willReturn(20, 30);
+	@Test
+	void generateRandomFactorIsBetweenExpectedLimits() {
+		// 89 is max - min range
+		given(random.nextInt(89)).willReturn(20, 30);
 
-        // when we generate a challenge
-        Challenge challenge = challengeGeneratorService.randomChallenge();
+		// when we generate a challenge
+		Challenge challenge = challengeGeneratorService.randomChallenge();
 
-        // then the challenge contains factors as expected
-        then(challenge).isEqualTo(new Challenge(31, 41));
-    }
+		// then the challenge contains factors as expected
+		then(challenge).isEqualTo(new Challenge(31, 41));
+	}
 
 }

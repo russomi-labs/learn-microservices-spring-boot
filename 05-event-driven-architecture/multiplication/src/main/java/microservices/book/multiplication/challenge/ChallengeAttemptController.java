@@ -21,21 +21,21 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/attempts")
 class ChallengeAttemptController {
 
-	private final ChallengeService challengeService;
+  private final ChallengeService challengeService;
 
-	@PostMapping
-	public ResponseEntity<ChallengeAttempt> postResult(
-			@RequestBody @Valid ChallengeAttemptDTO challengeAttemptDTO) {
+  @PostMapping
+  public ResponseEntity<ChallengeAttempt> postResult(
+      @RequestBody @Valid ChallengeAttemptDTO challengeAttemptDTO) {
 
-		log.debug("getStatistics for {}", challengeAttemptDTO.toString());
-		return ResponseEntity.ok(challengeService.verifyAttempt(challengeAttemptDTO));
-	}
+    log.debug("getStatistics for {}", challengeAttemptDTO.toString());
+    return ResponseEntity.ok(challengeService.verifyAttempt(challengeAttemptDTO));
+  }
 
-	@GetMapping
-	public ResponseEntity<List<ChallengeAttempt>> getStatistics(
-			@RequestParam("alias") String alias) {
+  @GetMapping
+  public ResponseEntity<List<ChallengeAttempt>> getStatistics(
+      @RequestParam("alias") String alias) {
 
-		log.debug("getStatistics for {}", alias);
-		return ResponseEntity.ok(challengeService.getStatsForUser(alias));
-	}
+    log.debug("getStatistics for {}", alias);
+    return ResponseEntity.ok(challengeService.getStatsForUser(alias));
+  }
 }

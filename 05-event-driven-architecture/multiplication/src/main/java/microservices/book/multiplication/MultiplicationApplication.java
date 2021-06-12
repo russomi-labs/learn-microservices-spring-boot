@@ -18,20 +18,17 @@ public class MultiplicationApplication {
 
 	// @Bean
 	// public ObjectMapper objectMapper() {
-	// 	var om = new ObjectMapper();
-	// 	om.setPropertyNamingStrategy(PropertyNamingStrategies.UPPER_CAMEL_CASE);
-	// 	return om;
+	// var om = new ObjectMapper();
+	// om.setPropertyNamingStrategy(PropertyNamingStrategies.UPPER_CAMEL_CASE);
+	// return om;
 	// }
 
 	@Configuration
 	public class SpringFoxConfig {
 		@Bean
 		public Docket api() {
-			return new Docket(DocumentationType.SWAGGER_2)
-			  .select()
-			  .apis(RequestHandlerSelectors.any())
-			  .paths(PathSelectors.any())
-			  .build();
+			return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any())
+					.paths(PathSelectors.any()).build();
 		}
 	}
 }

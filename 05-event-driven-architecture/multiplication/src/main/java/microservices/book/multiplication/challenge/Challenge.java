@@ -13,6 +13,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class Challenge {
-	private int factorA;
-	private int factorB;
+  private int factorA;
+  private int factorB;
 }

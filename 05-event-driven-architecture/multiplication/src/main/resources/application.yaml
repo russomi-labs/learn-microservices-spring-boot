@@ -16,6 +16,12 @@
 # For educational purposes we will show the SQL in console
 # spring.jpa.show-sql=true
 
+# Name of the exchange
+# amqp.exchange.attempts=attempts.topic
+
+# Shows declaration of exchanges, queues, bindings, etc.
+# logging.level.org.springframework.amqp.rabbit.core.RabbitAdmin = DEBUG
+
 ---
 # server section
 server:
@@ -37,6 +43,12 @@ spring:
       ddl-auto: update
     show-sql: true
 
-service:
-  gamification:
-    host: http://localhost:8081
+# Name of the exchange
+amqp:
+  exchange:
+    attempts: attempts.topic
+
+# logging
+logging:
+  level:
+    org.springframework.amqp.rabbit.core.RabbitAdmin: DEBUG

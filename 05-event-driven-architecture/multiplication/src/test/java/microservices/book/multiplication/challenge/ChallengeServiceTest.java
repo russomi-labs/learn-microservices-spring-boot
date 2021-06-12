@@ -1,24 +1,21 @@
 package microservices.book.multiplication.challenge;
 
-import microservices.book.multiplication.serviceclients.GamificationServiceClient;
-import microservices.book.multiplication.user.User;
-import microservices.book.multiplication.user.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import microservices.book.multiplication.user.User;
+import microservices.book.multiplication.user.UserRepository;
 
 @ExtendWith(MockitoExtension.class)
 class ChallengeServiceTest {
@@ -30,15 +27,11 @@ class ChallengeServiceTest {
 	@Mock
 	private ChallengeAttemptRepository attemptRepository;
 	@Mock
-	private GamificationServiceClient gamificationServiceClient;
+	private ChallengeEventPub eventPub;
 
 	@BeforeEach
 	public void setUp() {
-		challengeService = new ChallengeServiceImpl(userRepository, attemptRepository,
-				gamificationServiceClient);
-		// Keep in mind that we needed to move the
-		// given(attemptRepository)... to the test cases
-		// that use it to prevent the unused stubs errors.
+		challengeService = new ChallengeServiceImpl(userRepository, attemptRepository, eventPub);
 	}
 
 	@Test
@@ -54,7 +47,7 @@ class ChallengeServiceTest {
 		then(resultAttempt.isCorrect()).isTrue();
 		verify(userRepository).save(new User("john_doe"));
 		verify(attemptRepository).save(resultAttempt);
-		verify(gamificationServiceClient).sendAttempt(resultAttempt);
+		verify(eventPub).challengeSolved(resultAttempt);
 	}
 
 	@Test
@@ -70,7 +63,7 @@ class ChallengeServiceTest {
 		then(resultAttempt.isCorrect()).isFalse();
 		verify(userRepository).save(new User("john_doe"));
 		verify(attemptRepository).save(resultAttempt);
-		verify(gamificationServiceClient).sendAttempt(resultAttempt);
+		verify(eventPub).challengeSolved(resultAttempt);
 	}
 
 	@Test
@@ -89,7 +82,7 @@ class ChallengeServiceTest {
 		then(resultAttempt.getUser()).isEqualTo(existingUser);
 		verify(userRepository, never()).save(any());
 		verify(attemptRepository).save(resultAttempt);
-		verify(gamificationServiceClient).sendAttempt(resultAttempt);
+		verify(eventPub).challengeSolved(resultAttempt);
 	}
 
 	@Test
@@ -98,16 +91,8 @@ class ChallengeServiceTest {
 		User user = new User("john_doe");
 		ChallengeAttempt attempt1 = new ChallengeAttempt(1L, user, 50, 60, 3010, false);
 		ChallengeAttempt attempt2 = new ChallengeAttempt(2L, user, 50, 60, 3051, false);
-
-		// Java 9
-		// List<ChallengeAttempt> lastAttempts = List.of(attempt1, attempt2);
-
-		// Java 8
-		List<ChallengeAttempt> lastAttempts =
-				Stream.of(attempt1, attempt2).collect(Collectors.toList());
-
-		given(attemptRepository.findTop10ByUserAliasOrderByIdDesc("john_doe"))
-				.willReturn(lastAttempts);
+		List<ChallengeAttempt> lastAttempts = Arrays.asList(attempt1, attempt2);
+		given(attemptRepository.findTop10ByUserAliasOrderByIdDesc("john_doe")).willReturn(lastAttempts);
 
 		// when
 		List<ChallengeAttempt> latestAttemptsResult = challengeService.getStatsForUser("john_doe");
